@@ -12,16 +12,15 @@ struct StopwatchView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
+            VStack(spacing: 0) {
+                // Fixed: Timer Display + Control Buttons
                 VStack(spacing: 0) {
-                    // Timer Display
                     Text(viewModel.formattedTime)
                         .font(.system(size: 60, weight: .light, design: .rounded))
                         .foregroundStyle(.white)
                         .padding(.top, 20)
                         .padding(.bottom, 24)
 
-                    // Control Buttons
                     HStack(spacing: 20) {
                         Button(action: { viewModel.reset() }) {
                             Image(systemName: "trash")
@@ -64,18 +63,20 @@ struct StopwatchView: View {
                         .opacity(viewModel.isRunning ? 1.0 : 0.5)
                     }
                     .padding(.bottom, 20)
+                }
+                .background(Color.black)
 
-                    // Lap List
-                    if !viewModel.laps.isEmpty {
-                        VStack(spacing: 0) {
+                // Scrollable: Laps only
+                ScrollView {
+                    VStack(spacing: 0) {
+                        if !viewModel.laps.isEmpty {
                             ForEach(viewModel.laps.reversed()) { lap in
                                 LapRowView(lap: lap, viewModel: viewModel)
                                 Divider().background(Color(.systemGray5).opacity(0.3))
                             }
                         }
+                        Spacer(minLength: 20)
                     }
-
-                    Spacer(minLength: 20)
                 }
             }
             .background(Color.black.ignoresSafeArea())

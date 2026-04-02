@@ -102,39 +102,38 @@ struct TimeCalculatorView: View {
                         }
                     }
 
-                    // Row 4: 1, 2, 3, =
+                    // Row 4+5: 1,2,3 / 0,分 (left) + = tall (right)
                     HStack(spacing: 10) {
-                        CalcButton(label: "1", style: .dark) { viewModel.inputDigit(1) }
-                        CalcButton(label: "2", style: .dark) { viewModel.inputDigit(2) }
-                        CalcButton(label: "3", style: .dark) { viewModel.inputDigit(3) }
-
-                        // = button (spans 2 rows)
+                        VStack(spacing: 10) {
+                            HStack(spacing: 10) {
+                                CalcButton(label: "1", style: .dark) { viewModel.inputDigit(1) }
+                                CalcButton(label: "2", style: .dark) { viewModel.inputDigit(2) }
+                                CalcButton(label: "3", style: .dark) { viewModel.inputDigit(3) }
+                            }
+                            HStack(spacing: 10) {
+                                Button(action: { viewModel.inputDigit(0) }) {
+                                    Text("0")
+                                        .font(.system(size: 22, weight: .semibold))
+                                        .foregroundStyle(.white)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 56)
+                                        .background(Color(.systemGray4))
+                                        .cornerRadius(10)
+                                }
+                                CalcButton(label: "分", style: .gray) {
+                                    viewModel.inputMinutesMode()
+                                }
+                            }
+                        }
+                        // = button (tall, right column)
                         Button(action: { viewModel.calculate() }) {
                             Text("=")
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundStyle(.white)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 130)
+                                .frame(width: (UIScreen.main.bounds.width - 62) / 4)
+                                .frame(height: 122)
                                 .background(.orange)
                                 .cornerRadius(10)
-                        }
-                    }
-
-                    // Row 5: 0 (wide), 分
-                    HStack(spacing: 10) {
-                        // 0 spans 2 columns
-                        Button(action: { viewModel.inputDigit(0) }) {
-                            Text("0")
-                                .font(.system(size: 22, weight: .semibold))
-                                .foregroundStyle(.white)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 56)
-                                .background(Color(.systemGray4))
-                                .cornerRadius(10)
-                        }
-
-                        CalcButton(label: "分", style: .gray) {
-                            viewModel.inputMinutesMode()
                         }
                     }
                 }

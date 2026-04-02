@@ -202,7 +202,7 @@ struct AgeCalculatorView: View {
                             .font(.system(size: 52, weight: .light))
                             .foregroundStyle(.orange)
 
-                        Text("\(Calendar.current.component(.year, from: result.birthDate))年\(Calendar.current.component(.month, from: result.birthDate))月\(Calendar.current.component(.day, from: result.birthDate))日生まれ")
+                        Text(verbatim: "\(Calendar.current.component(.year, from: result.birthDate))年\(Calendar.current.component(.month, from: result.birthDate))月\(Calendar.current.component(.day, from: result.birthDate))日生まれ")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
 
@@ -223,7 +223,7 @@ struct AgeCalculatorView: View {
                             Text("総日数")
                                 .foregroundStyle(.gray)
                             Spacer()
-                            Text("\(result.totalDays)日")
+                            Text(verbatim: "\(result.totalDays)日")
                                 .font(.system(.body, design: .monospaced))
                                 .foregroundStyle(.white)
                         }
@@ -307,7 +307,7 @@ struct AgeTableView: View {
                 LazyVStack(spacing: 0) {
                     ForEach((1900...Calendar.current.component(.year, from: Date())).reversed(), id: \.self) { year in
                         HStack {
-                            Text("\(year)年")
+                            Text(verbatim: "\(year)年")
                                 .font(.system(.body, design: .monospaced))
                                 .foregroundStyle(.white)
                             Spacer()
