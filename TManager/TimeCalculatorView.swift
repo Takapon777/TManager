@@ -14,21 +14,25 @@ struct TimeCalculatorView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 // History Area
-                VStack(alignment: .trailing) {
-                    if !viewModel.historyText.isEmpty {
-                        Text(viewModel.historyText)
-                            .font(.caption)
-                            .foregroundStyle(.gray)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    } else {
-                        Text("履歴なし")
-                            .font(.caption)
-                            .foregroundStyle(.gray)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                ScrollView {
+                    VStack(alignment: .trailing, spacing: 4) {
+                        if viewModel.history.isEmpty {
+                            Text("履歴なし")
+                                .font(.caption)
+                                .foregroundStyle(.gray)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        } else {
+                            ForEach(viewModel.history, id: \.self) { item in
+                                Text(item)
+                                    .font(.caption)
+                                    .foregroundStyle(.gray)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                        }
                     }
+                    .padding(8)
                 }
-                .padding()
-                .frame(height: 60)
+                .frame(height: 80)
                 .background(Color(.systemGray6).opacity(0.3))
                 .cornerRadius(10)
                 .padding(.horizontal)

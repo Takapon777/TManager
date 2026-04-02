@@ -12,7 +12,7 @@ import Combine
 class TimeCalculatorViewModel: ObservableObject {
     @Published var displayMinutes: Int = 0
     @Published var displaySeconds: Int = 0
-    @Published var historyText: String = ""
+    @Published var history: [String] = []
     @Published var expressionText: String = ""
 
     private var currentValue: Int = 0  // stored in total seconds
@@ -99,7 +99,7 @@ class TimeCalculatorViewModel: ObservableObject {
 
         let result = calculate(currentValue, pendingValue: enteredValue, op: pendingOp)
         let expression = "\(formatSeconds(currentValue)) \(pendingOp) \(formatSeconds(enteredValue)) = \(formatSeconds(result))"
-        historyText = expression
+        history.insert(expression, at: 0)
 
         currentValue = result
         setDisplayFromSeconds(result)
@@ -121,7 +121,7 @@ class TimeCalculatorViewModel: ObservableObject {
         waitingForOperand = false
         isEnteringSeconds = false
         hasDecimal = false
-        historyText = ""
+        history = []
         expressionText = ""
     }
 
